@@ -8,6 +8,11 @@ const parseJSON = (data) => {
     };
 };
 
+const formatValue = (value) => {
+    const parsedValue = parseFloat(value, 10);
+    return parsedValue.toFixed(2);
+};
+
 const doRequest = (url, dataPrice, dataCurrency) => {
     const callback = (error, httpResponse, body) => {
         const response = parseJSON(body);
@@ -20,7 +25,7 @@ const doRequest = (url, dataPrice, dataCurrency) => {
 
 const getPriceCoinBase = () => {
     const url = 'http://api.coinbase.com/v2/prices/spot?currency=USD';
-    const dataPrice = (response) => response.data.amount;
+    const dataPrice = (response) => formatValue(response.data.amount);
     const dataCurrency = (response) => response.data.currency;
     doRequest(url, dataPrice, dataCurrency);
 };
